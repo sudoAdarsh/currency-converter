@@ -1,0 +1,38 @@
+name: Update Exchange Rates
+
+on:
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Update exchange rates
+        run: python scripts/update_rates.py
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit updated data
+        run: |
+          git add public/data.json
+          git diff --staged --quiet || git commit -m "Updated exchange rates"
+
+      - name: Push Changes
+        run: git push
