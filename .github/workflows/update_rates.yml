@@ -22,6 +22,8 @@ jobs:
         run: pip install requests
 
       - name: Update exchange rates
+        env:
+          EXCHANGE_API_KEY: ${{ secrets.EXCHANGE_API_KEY }}
         run: python scripts/update_rates.py
 
       - name: Configure Git

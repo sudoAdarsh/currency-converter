@@ -6,7 +6,7 @@ export function Header() {
       <h1 className="font-bold text-3xl">Currency Converter</h1>
       <a
         className="absolute right-4"
-        href="https://github.com/sudoAdarsh"
+        href="https://github.com/sudoAdarsh/currency-converter/"
         target="_blank"
         rel="noopener noreferrer"
       >

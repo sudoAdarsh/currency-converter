@@ -1,16 +1,170 @@
-# React + Vite
+# 💱 Currency Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive currency converter built with **React** and **Tailwind CSS** that provides live exchange rates while remaining completely free to host.
 
-Currently, two official plugins are available:
+Instead of relying on a traditional backend server, this project uses **GitHub Actions** to fetch exchange rates once per day and update a static `data.json` file, allowing the frontend to serve fresh data directly from GitHub Pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 **Live Demo:** https://sudoadarsh.github.io/currency-converter/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- 🌍 Search over 160+ world currencies
+- 🎯 Smart search ranking (code, country, and currency name)
+- ⌨️ Full keyboard navigation
+  - Arrow key navigation
+  - Enter to select
+  - Escape to close
+  - Tab support
+- 📱 Responsive layout for desktop and mobile
+- 🔄 Instant conversion (no Convert button required)
+- 💾 LocalStorage caching to avoid unnecessary downloads
+- ⚡ Automatic daily exchange rate updates
+- 🚀 Fully static deployment on GitHub Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+### Frontend
+
+- React
+- Tailwind CSS
+- Vite
+
+### Automation
+
+- GitHub Actions
+- Python
+- ExchangeRate API
+
+### Hosting
+
+- GitHub Pages
+
+---
+
+## Project Structure
+
+```
+src
+├── assets
+├── components
+│   ├── ActionPanel.jsx
+│   ├── CurrencySearch.jsx
+│   ├── FromPanel.jsx
+│   ├── Header.jsx
+│   ├── PopularCurrencies.jsx
+│   └── ToPanel.jsx
+├── utils
+│   ├── convertCurrency.js
+│   ├── loadRates.js
+│   ├── popularCurrencies.js
+│   └── showRecommendations.js
+├── App.jsx
+└── main.jsx
+```
+
+The project follows a component-based architecture where UI, business logic, and utility functions are separated to keep components small and maintainable.
+
+---
+
+## How It Works
+
+### Exchange Rate Updates
+
+A GitHub Action runs every day at **00:05 UTC**.
+
+The workflow:
+
+1. Fetches the latest exchange rates from ExchangeRate API.
+2. Updates `public/data.json`.
+3. Commits the updated file.
+4. GitHub Pages automatically serves the latest data.
+
+This approach removes the need for a continuously running backend while keeping exchange rates up to date.
+
+---
+
+### Client-side Caching
+
+When the application starts:
+
+- Cached exchange rates are checked in LocalStorage.
+- If the cache is still valid, it is reused.
+- Otherwise, the latest `data.json` is loaded and cached.
+
+This minimizes unnecessary downloads and keeps the application fast.
+
+---
+
+## Running Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/sudoAdarsh/currency-converter.git
+cd currency-converter
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+---
+
+## GitHub Action
+
+The repository includes a scheduled workflow that automatically refreshes exchange rates every day.
+
+For local testing, run:
+
+```bash
+python scripts/update_rates.py
+```
+
+---
+
+## What I Learned
+
+This project was my first complete React application and taught me much more than simply building a UI.
+
+Some of the concepts explored include:
+
+- React component architecture
+- State management using hooks
+- Building reusable components
+- Keyboard accessibility
+- Responsive design with Tailwind CSS
+- Search ranking algorithms
+- LocalStorage caching
+- Separation of UI and business logic
+- GitHub Pages deployment
+- GitHub Actions automation
+- Managing secrets securely
+- CI/CD fundamentals
+
+---
+
+## Future Improvements
+
+- Better accessibility (ARIA support)
+- Improved keyboard focus management
+- Search input debouncing
+- Historical exchange rate support
+- Offline-first support with a Service Worker
+
+---
+
+## License
+
+This project is licensed under the MIT License.
